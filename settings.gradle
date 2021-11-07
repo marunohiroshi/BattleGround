@@ -1,0 +1,2 @@
+rootProject.name = "BattleGround"
+include ':app'
