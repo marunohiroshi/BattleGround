@@ -1,13 +1,14 @@
 package com.example.battleground
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import com.example.battleground.ui.main.SectionsPagerAdapter
 import com.example.battleground.databinding.ActivityMainBinding
 
@@ -28,9 +29,18 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
         val fab: FloatingActionButton = binding.fab
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener { _ ->
+//            transitionTo(AddBattleLogActivity.newInstance())
+            val intent = Intent(applicationContext, AddBattleLogActivity::class.java)
+            startActivity(intent)
         }
+    }
+
+    fun transitionTo(newFragment: BaseFragment): Int {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, newFragment, newFragment::class.simpleName)
+        fragmentTransaction.addToBackStack(newFragment::class.simpleName)
+        return fragmentTransaction.commit()
     }
 }
