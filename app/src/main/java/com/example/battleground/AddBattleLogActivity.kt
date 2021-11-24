@@ -8,10 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.battleground.databinding.AddBattleLogActivityBinding
 import com.example.battleground.ui.main.SelectHeroFragment
+import android.widget.NumberPicker.OnValueChangeListener
+
+
+
 
 
 class AddBattleLogActivity: AppCompatActivity() {
@@ -50,6 +56,11 @@ class AddBattleLogActivity: AppCompatActivity() {
             binding.rateChange.value = 0 + 100
         }
 
+        binding.rateChange.setOnValueChangedListener { picker, oldVal, newVal ->
+            //入力値が変更されるたびに入れたい処理
+            binding.rateChange.value = newVal
+        }
+
         // 保存ボタン押下時処理
         binding.saveButton.setOnClickListener {
             val newBattleLogData = Intent()
@@ -86,6 +97,13 @@ class AddBattleLogActivity: AppCompatActivity() {
 //            supportFragmentManager.beginTransaction().replace(R.id.container, SelectHeroFragment.newInstance())
 //                .commitNow()
         }
+        val deckTypeArray: ArrayList<String> = ArrayList()
+        for (i in DeckTypeData.values().indices) {
+            val deckType = DeckTypeData.values()[i].DeckType
+            deckTypeArray.add(deckType)
+        }
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this, R.layout.simple_list_item_1, deckTypeArray)
+        binding.gridView.adapter = adapter
     }
 
     /**
@@ -148,4 +166,6 @@ class AddBattleLogActivity: AppCompatActivity() {
         fragmentTransaction.addToBackStack(newFragment::class.simpleName)
         return fragmentTransaction.commit()
     }
+
+
 }

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, AddBattleLogActivity::class.java)
             startActivity(intent)
         }
-        
+
     }
 
     fun transitionTo(newFragment: BaseFragment): Int {
